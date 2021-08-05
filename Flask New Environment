@@ -1,0 +1,46 @@
+Step 1: Setup virtual environment: 
+command prompt: virtualenv {folder name}
+__________________________________________________________________________________________________________________________________________________
+
+Step 2: activate the environment:
+command prompt: {folder name}\Scripts\activate
+__________________________________________________________________________________________________________________________________________________
+
+Step 3: install flask:
+command prompt: pip install flask
+__________________________________________________________________________________________________________________________________________________
+
+Step 4: Open the file in vscode:
+command prompt: code .
+__________________________________________________________________________________________________________________________________________________
+
+Step 5: Create a file named Config.py:
+Vscode: Config.py
+__________________________________________________________________________________________________________________________________________________
+
+Step 6: Write code in Config.py
+Vscode: import os
+basedir = os.path.abspath(os.path.dirname(__file__))
+class Config:
+    SECRET_KEY = 'You will never guess...'
+__________________________________________________________________________________________________________________________________________________
+
+Step 7: Create .env file
+command prompt: pip install python-dotenv
+Vscode: Create the file after installing 
+__________________________________________________________________________________________________________________________________________________
+
+Step 8: Create app folder and call it whatever you want
+__________________________________________________________________________________________________________________________________________________
+
+Step 9: Create a __init__.py file inside the folder, import Flask and Config, and create a variable
+Vscode: from flask import Flask
+from config import Config
+{variable} = Flask(__name__)
+app.config.from_object(Config)
+__________________________________________________________________________________________________________________________________________________
+
+Step 10: do the usual FLASK_APP and FLASK_ENV
+command prompt: set FLASK_APP={app folder name}
+set FLASK_ENV=development
+__________________________________________________________________________________________________________________________________________________

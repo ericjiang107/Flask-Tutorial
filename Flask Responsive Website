@@ -2,8 +2,9 @@
 
 *** Assuming we are routing to a site with a homepage and profile page -- want authentication with signin and signup ***
 
+__________________________________________________________________________________________________________________________________________________
 
-Step 1: Create 2 folders, each with a file in them {name+templates}, each with a routes file called {routes.py}
+Step 1: Create 2 folders with a routes file called {routes.py} and within each folder, create another folder in them called {name+templates}
 __________________________________________________________________________________________________________________________________________________
 
 Step 2: Since the 2 routes are blueprints, we need to import Blueprint and render_template:
@@ -11,14 +12,82 @@ Vscode (in both routes.py): from flask import Blueprint, render_template
 __________________________________________________________________________________________________________________________________________________
 
 Step 3: In each route, set a variable to Blueprint:
-Vscode: one routes.py:
+Vscode: one of the routes.py:
 from flask import Blueprint, render_template
 {variable} = Blueprint('{variable}',__name__, template_folder={name + templates folder name})
 __________________________________________________________________________________________________________________________________________________
 
-Step 4: In each route page, add your routes:
-Vscode: @{variable}.route('/')
+Step 4: In each route page, add your decorator + routes:
+Vscode: @{variable}.route('/page_name')
 def {page_name}(): <------- ex: {signup}():
 return render_template('{filename.html}) <------- ex: {signup.html}
+__________________________________________________________________________________________________________________________________________________
 
-Video time stamp: 15:30
+Step 5: In one of the folders, create the html files
+ex: {name + templates} folder --> 1 file named {signup.html} and another {signin.html}
+__________________________________________________________________________________________________________________________________________________
+
+Step 6: In your __init__ file location, register the folders as blueprints
+Vscode: {variable}.register_blueprint(folder name)
+ex: app.register_blueprint(site)
+__________________________________________________________________________________________________________________________________________________
+
+Step 7: In your __init__ file location, import the folders
+Vscode: from {.folder name}.routes import {folder name with .html file in it}
+ex: from .authentication.routes import auth
+__________________________________________________________________________________________________________________________________________________
+
+Step 8: Create another folder to hosue your base.html location on the same line as the other folders
+ex: {variable name}
+        base.html
+__________________________________________________________________________________________________________________________________________________
+
+Step 9: Inside your base.html, setup what you want it to have (usually nav bar)
+__________________________________________________________________________________________________________________________________________________
+
+Step 10: Inside your base.html, add your wraps
+Vscode: 
+{% block content %}
+
+{% endblock content %}
+__________________________________________________________________________________________________________________________________________________
+
+Step 11: In the other .html files that you have and want it to inherit the base.html:
+Vscode: {% extends 'base.html %}
+{% block content %}
+    Other code here
+{% endblock content %}
+__________________________________________________________________________________________________________________________________________________
+
+Step 12: Run the code using flask run --> It will create __pycache__ folders but that is fine
+command prompt: flask run
+__________________________________________________________________________________________________________________________________________________
+
+Step 13: Create a .gitignore file so when you push the code, everything you put into the .gitignore will not push
+Vscode: usually, you would put:
+__pycache__
+.env file
+virtual environment file name 
+__________________________________________________________________________________________________________________________________________________
+
+Step 14: Install other flask resources:
+command prompt: 
+pip install Flask-SQLAlchemy 
+pip install Flask-Migrate
+pip install sycopg2
+pip install Flask-Login
+pip install Flask-WTF
+pip install email-validator
+__________________________________________________________________________________________________________________________________________________
+
+Step 15: Create a form (which is why Flask-WTF was installed) -- inside the general folder, create a new file named forms.py and import flask_wtf to it
+Vscode: from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField
+from wtforms.validators import DataRequired, Email
+__________________________________________________________________________________________________________________________________________________
+
+Step 16: In that same file location, create a class that will inherit whatever is inside FlaskForm and add fields
+Vscode: class {name}(FlaskForm):
+    email = StringField('Email' validators=[DataRequired(), Email()]) <---- adding attributes now
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit_button = SubmitField()

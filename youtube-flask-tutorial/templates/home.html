@@ -1,0 +1,14 @@
+<!-- Using the layout tempalte to copy -->
+{% extends "layout.html" %}
+{% block content %}
+
+<!-- Example of for loop using jinja2 syntax -->
+    {% for post in posts %}
+        <h1> {{ post.title }} </h1> <!-- {{}} is a variable that we are printing out. We are accessing
+        that specific variable inside the (posts) dictionary -->
+        <p> By {{ post.author }} on {{post.date_posted }} </p>
+        <p> {{ post.content }} </p>
+    {% endfor %}  <!-- This tells the jinga statement that it is the end of the for loop -->
+
+
+{% endblock content %}

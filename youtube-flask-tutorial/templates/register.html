@@ -1,0 +1,53 @@
+<!-- Extending the layout.html here as well -->
+
+{% extends "layout.html" %}
+{% block content %}
+
+    <!-- Creating html/css -->
+    <div class="content-section">
+        <form method="POST" action=""> <!-- We use "POST" in this case because we want to post this form -->
+            {{ form.hidden_tag() }} <!-- hidden_tag is adding a cs.ref token/part of the protection side --> 
+            <fieldset class = "form-group">
+                <legend class = "border-bottom mb-4>">
+                    Join Today
+                </legend>
+                <div class="form-group">
+                    {{ form.username.label(class="form-control-label") }} <!-- This will print out the label from our field username -->
+                    <!-- (class="form-control-label") is just bootstrap to make it look nicer -->
+                    {{ form.username(class="form-control form-control-lg") }}
+                </div>
+                <!-- For the EmailField -->
+                <div class="form-group">
+                    {{ form.email.label(class="form-control-label") }}
+                    {{ form.email(class="form-control form-control-lg") }}
+                </div>
+                <!-- For the PasswordField -->
+                <div class="form-group">
+                    {{ form.password.label(class="form-control-label") }}
+                    {{ form.password(class="form-control form-control-lg") }}
+                </div>
+                <!-- Confirm PasswordField -->
+                <div class="form-group">
+                    {{ form.confirm_password.label(class="form-control-label") }}
+                    {{ form.confirm_password(class="form-control form-control-lg") }}
+                </div>
+            </fieldset>
+            <!-- For the submit -->
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            Already Have An Account? 
+            <!-- Anchor tag --> 
+            <a class = "ml-2" href = "{{ url_for('login') }}"> 
+                Sign In
+            </a>
+            <!-- Link to the Login Page -->
+            <!-- The ('login') refers to the function name of the login and not the route name -->
+        </small>
+    </div>
+
+{% endblock content %}

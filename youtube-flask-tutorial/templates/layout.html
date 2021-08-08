@@ -1,0 +1,36 @@
+<!-- Pick out all the repeated sections in the (home) and (about) sections -->
+<!-- This is what is shared between both route pages -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="Description" content="Enter your description here"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link rel="stylesheet" href="assets/css/style.css">
+<title>Title</title>
+</head>
+<body>
+
+    <h1> Layout Page </h1>
+
+    Jinja2 statement syntax
+
+    <!-- Example of if statement using jinja2 syntax -->
+    {% if title %} <!-- This is telling us that we are checking if title has a name, do something -->
+            <title> Flask Blog - {{ title }} </title>
+    {% else %} <!-- This is telling us that if title does not have a name, do something else -->
+            <title> Flask Blog </title>
+    {% endif %}
+
+
+    {% block content %} 
+    {% endblock %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.min.js"></script>
+</body>
+</html>

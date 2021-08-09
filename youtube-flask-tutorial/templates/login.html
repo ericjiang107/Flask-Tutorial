@@ -3,6 +3,74 @@
 {% extends "layout.html" %}
 {% block content %}
 
-    <h1> About Page </h1>
+ <!-- Creating html/css -->
+ <div class="content-section">
+    <form method="POST" action=""> <!-- We use "POST" in this case because we want to post this form -->
+        {{ form.hidden_tag() }} <!-- hidden_tag is adding a cs.ref token/part of the protection side --> 
+        <fieldset class = "form-group">
+            <legend class = "border-bottom mb-4>">
+                Login
+            </legend>
+            <div class="form-group">
+            <!-- For the EmailField -->
+            <div class="form-group">
+                {{ form.email.label(class="form-control-label") }}
+                {% if form.email.errors %} <!-- This will only activate if there is an error -->
+                    {{ form.email(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        <!-- Print out all the errors that occured in the email section -->
+                        {% for error in form.email.errors %}
+                            <span>
+                                {{ error }}
+                            </span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                        {{ form.email(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <!-- For the PasswordField -->
+            <div class="form-group">
+                {{ form.password.label(class="form-control-label") }}
+                {% if form.password.errors %} <!-- This will only activate if there is an error -->
+                    {{ form.password(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        <!-- Print out all the errors that occured in the password section -->
+                        {% for error in form.password.errors %}
+                            <span>
+                                {{ error }}
+                            </span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                        {{ form.password(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-check"> <!-- Using form-check since we are only checking here -->
+                {{ form.remember(class="form-check-input") }}
+                {{ form.remember.label(class="form-check-label") }}
+            </div>
+        <!-- For the submit -->
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+        <small class = "text-muted ml-2">
+            <a href="">
+                Forgot Password?
+            </a>
+        </small>
+    </form>
+</div>
+<div class="border-top pt-3">
+    <small class="text-muted">
+        Need An Account? 
+        <!-- Anchor tag --> 
+        <a class = "ml-2" href = "{{ url_for('register') }}"> 
+            Sign Up Now
+        </a>
+        <!-- Link to the Login Page -->
+        <!-- The ('login') refers to the function name of the login and not the route name -->
+    </small>
+</div>
 
 {% endblock content %}

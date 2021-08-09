@@ -3,6 +3,8 @@ from flask import render_template # the reason we import this is so we can get a
 from flask import url_for
 from flask import flash
 from flask import redirect
+from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime 
 
 
 app = Flask(__name__) # setting app variable to instance of Flask class
@@ -89,12 +91,53 @@ def register():
     # Using the validate_on_submit method
     if form.validate_on_submit():
         # Using a flash message 
-        flash(f'Account created for {form.username.data}!')
+        flash(f'Account created for {form.username.data}!', 'success')
         return redirect(url_for('home')) 
     return render_template('register.html', form=form) # form = form so we have access to that form
 
 
-@app.route('/login')
+@app.route('/login', methods = ['GET','POST'])
 def register():
     form = LoginForm()
+    if form.validate_on_submit():
+        if form.email.data == 'admin@blog.com' and form.password.data == 'password':
+            flash(f'You have been logged in!', 'success')
+            return redirect(url_for('home')) 
+        else:
+            flash(f'Login Unsuccessful, please check Username and Password', 'danger')
     return render_template('login.html', form=form)
+
+________________________________________________________________________________________________________________________________________________
+
+# From import SQLAlchemy
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db' # /// shows a relative path from the current file so the site.db file should get created
+
+# Create a database instance:
+db = SQLAlchemy(app) # Can be moved to a different file
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    image_file = db.Column(db.String(20), nullable=False, default='default.jpg') 
+    # default --> when an account is created, if the user did not specifiy an image --> default an image)
+    password = db.Column(db.String(60), nullable=False)
+    posts = db.relationship('Post',backref='author',lazy=True) # This sets up a relationship with the class (Post)
+    # backref is similar to adding another column to the post model, use the author attribute
+
+    def __repr__(self): # the __repr__ method how the object ios printed when we print it out
+        return f"User('{self.username}','{self.email}', '{self.image_file}')"
+
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    content = db.Column(db.Text, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False) # ForeginKey means this has a relationship with the other variable with relationship
+
+    def __repr__(self):
+        return f"Post('{self.title}','{self.date_posted}')"
+
+________________________________________________________________________________________________________________________________________________
+
+

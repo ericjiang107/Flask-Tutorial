@@ -27,6 +27,20 @@
     {% endif %}
 
 
+    {% with messages = get_flashed_messages(with_categories=true) %} <!-- gets the flashed messages sent to this template -->
+    <!-- The argument: (with_categories=true) will allow us to grab the ('success') category from register -->
+        {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+                <!-- Print out the message -->
+                {{ message }}
+            </div>
+            {% endfor %}
+        {% endif %}
+
+
+    {% endwith %}
+
     {% block content %} 
     {% endblock %}
 
